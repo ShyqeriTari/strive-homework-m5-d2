@@ -8,6 +8,7 @@ const server = express()
 const port = 3001
 
 server.use(express.json()) 
+server.use(cors())
 
 server.use("/authors", usersRouter)
 
