@@ -4,6 +4,7 @@ import fs from "fs"
 import { fileURLToPath } from "url" 
 import { dirname, join } from "path" 
 import uniqId from "uniqId" 
+import cors from "cors"
 
 
 console.log("CURRENT FILE URL: ", import.meta.url)
@@ -20,7 +21,7 @@ const authorsJSONPath = join(parentFolderPath, "authors.json")
 console.log("USERS JSON FILE PATH: ", authorsJSONPath)
 
 const authorsRouter = express.Router() 
-authorsRouter.post("/", (request, response) => {
+authorsRouter.post("/", cors(), (request, response) => {
   console.log("BODY: ", request.body) 
 
   const newAuthor = { ...request.body, id: uniqId() } 
@@ -39,7 +40,7 @@ authorsRouter.post("/", (request, response) => {
 })
 
 
-authorsRouter.get("/", (request, response) => {
+authorsRouter.get("/", cors(), (request,  response) => {
 
   const fileContent = fs.readFileSync(authorsJSONPath) 
   console.log("FILE CONTENT: ", JSON.parse(fileContent))
@@ -67,14 +68,14 @@ authorsRouter.get("/:authorId", (request, response) => {
 })
 
 
-authorsRouter.put("/:authorId", (request, response) => {
+authorsRouter.put("/:authorId", cors(), (request, response) => {
 
   const authorsArray = JSON.parse(fs.readFileSync(authorsJSONPath))
 
 
   const index = authorsArray.findIndex(author => author.id === request.params.authorId)
   const oldAuthor = authorsArray[index]
-  const updatedAuthor = { ...oldAuthor, ...request.body, updatedAt: new Date() }
+  const updatedAuthor = { ...oldAuthor, ...request.body}
 
   authorsArray[index] = updatedAuthor
 
@@ -87,7 +88,7 @@ authorsRouter.put("/:authorId", (request, response) => {
 })
 
 
-authorsRouter.delete("/:authorId", (request, response) => {
+authorsRouter.delete("/:authorId", cors(), (request, response) => {
 
   const authorsArray = JSON.parse(fs.readFileSync(authorsJSONPath))
 
