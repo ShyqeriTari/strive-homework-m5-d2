@@ -12,7 +12,7 @@ server.use(express.json())
 
 server.use(cors())
 
-server.use("/authors", usersRouter)
+server.use("/authors", authorsRouter)
 
 console.table(listEndpoints(server))
 
