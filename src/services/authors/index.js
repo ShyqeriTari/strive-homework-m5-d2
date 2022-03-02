@@ -18,9 +18,10 @@ console.log("PARENT FOLDER PATH ", parentFolderPath)
 
 
 const authorsJSONPath = join(parentFolderPath, "authors.json")
-console.log("USERS JSON FILE PATH: ", authorsJSONPath)
+console.log("AUTHORS JSON FILE PATH: ", authorsJSONPath)
 
 const authorsRouter = express.Router() 
+
 authorsRouter.post("/", cors(), (request, response) => {
   console.log("BODY: ", request.body) 
 
@@ -54,7 +55,7 @@ authorsRouter.get("/", cors(), (request,  response) => {
 })
 
 
-authorsRouter.get("/:authorId", (request, response) => {
+authorsRouter.get("/:authorId", cors(), (request, response) => {
   console.log("REQ PARAMS: ", request.params.authorId)
 
 
